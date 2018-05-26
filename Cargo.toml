@@ -1,0 +1,16 @@
+[package]
+name = "piston_scratch"
+version = "0.1.0"
+authors = ["Fabrício Bracht <fabracht@gmail.com>"]
+
+[dependencies]
+piston_window="*"
+itertools="*"
+itertools-num="*"
+piston2d-shapes="*"
+num_cpus="*"
+rayon="*"
+clippy = {version = "*", optional = true}
+
+[features]
+default = []
