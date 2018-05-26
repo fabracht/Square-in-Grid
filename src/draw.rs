@@ -9,7 +9,7 @@ use std::fmt;
 // use std::thread;
 // use std::time;
 
-pub const BLOCK_SIZE: f64 = 10.0;
+pub const BLOCK_SIZE: f64 = 5.0;
 pub const RED: Color = [1.0, 0.0, 0.0, 1.0];
 pub const GREEN: Color = [0.0, 1.0, 0.0, 0.5];
 pub const WHITE: Color = [1.0, 1.0, 1.0, 1.0];
@@ -48,8 +48,8 @@ impl Linea {
     }
 
     pub fn vertical_grid(&self, grid_number: usize) -> Vec<Linea> {
-        let width = &self.end.x - &self.start.x; // * BLOCK_SIZE;
-        let height = &self.end.y - &self.start.y; // * BLOCK_SIZE;
+        let width = self.end.x - self.start.x; // * BLOCK_SIZE;
+        let height = self.end.y - self.start.y; // * BLOCK_SIZE;
         let mut start = linspace(self.start.x, width - self.thickness, grid_number)
             .map(|x| Point::new(x, self.start.y));
         let mut end = linspace(self.start.x, width - self.thickness, grid_number)
@@ -66,8 +66,8 @@ impl Linea {
     }
 
     pub fn horizontal_grid(&self, grid_number: usize) -> Vec<Linea> {
-        let width = &self.end.x - &self.start.x; // * BLOCK_SIZE;
-        let height = &self.end.y - &self.start.y; // * BLOCK_SIZE;
+        let width = self.end.x - self.start.x; // * BLOCK_SIZE;
+        let height = self.end.y - self.start.y; // * BLOCK_SIZE;
         let mut start =
             linspace(0.0, height - self.thickness, grid_number).map(|y| Point::new(0.0, y));
         let mut end =
@@ -96,17 +96,13 @@ impl Linea {
     }
 
     pub fn cell_size(&self, grid_number: usize) {
-        let width = &self.end.x - &self.start.x;
-        let height = &self.end.y - &self.start.y;
+        let width = self.end.x - self.start.x;
+        let height = self.end.y - self.start.y;
         let cell_width = linspace(0.0, width, grid_number)
-            .take(2)
-            .skip(1)
-            .next()
+            .nth(2)
             .unwrap();
         let cell_height = linspace(0.0, height, grid_number)
-            .take(2)
-            .skip(1)
-            .next()
+            .nth(2)
             .unwrap();
     }
 }
@@ -147,15 +143,12 @@ impl Square {
 
     pub fn update_square(&mut self, dir: Option<Direction>) {
         // let mut position = ;
-        let position = match dir {
-            Some(mut d) => Direction::move_square(&mut d, self),
-            None => (),
-        };
+        if let Some(mut d) = dir { Direction::move_square(&mut d, self)};
     }
 }
 
 pub fn to_coord(game_coord: i32) -> f64 {
-    (game_coord as f64) * BLOCK_SIZE
+    f64::from(game_coord) * BLOCK_SIZE
 }
 
 pub fn to_coord_u32(game_coord: i32) -> u32 {
@@ -178,7 +171,7 @@ pub fn draw_rectangle(color: Color, column: i32, row: i32, con: &Context, g: &mu
     let (grid_width, grid_height) = grid_settings();
     // let square = rectangle::square(1.0, 1.0, grid_height);
     let rect = rectangle::rectangle_by_corners(1.0, 1.0, grid_width - 1.0, grid_height - 1.0);
-    let square_position = (grid_width * column as f64, grid_height * row as f64);
+    let square_position = (grid_width * f64::from(column), grid_height * f64::from(row));
 
     rectangle(
         color,
@@ -190,14 +183,10 @@ pub fn draw_rectangle(color: Color, column: i32, row: i32, con: &Context, g: &mu
 
 pub fn grid_settings() -> (f64, f64) {
     let grid_width = linspace(0.0, to_coord(WIDTH), VERTICAL_GRID_NUMBER + 2)
-        .take(2)
-        .skip(1)
-        .next()
+        .nth(2)
         .unwrap();
     let grid_height = linspace(0.0, to_coord(HEIGHT), HORIZONTAL_GRID_NUMBER + 2)
-        .take(2)
-        .skip(1)
-        .next()
+        .nth(2)
         .unwrap();
     (grid_width, grid_height)
 }

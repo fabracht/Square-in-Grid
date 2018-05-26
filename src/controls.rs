@@ -10,8 +10,8 @@ pub enum Direction {
 }
 
 impl Direction {
-    pub fn move_square(&mut self, mut square: &mut Square) {
-        let last_position: Square = Square::curr_position(&mut square);
+    pub fn move_square(&mut self, square: &mut Square) {
+        let last_position: Square = Square::curr_position(square);
         let hbarrier = VERTICAL_GRID_NUMBER as i32;
         let vbarrier = HORIZONTAL_GRID_NUMBER as i32;
         match *self {
