@@ -9,14 +9,14 @@ use std::fmt;
 // use std::thread;
 // use std::time;
 
-pub const BLOCK_SIZE: f64 = 5.0;
+pub const BLOCK_SIZE: f64 = 10.0;
 pub const RED: Color = [1.0, 0.0, 0.0, 1.0];
 pub const GREEN: Color = [0.0, 1.0, 0.0, 0.5];
 pub const WHITE: Color = [1.0, 1.0, 1.0, 1.0];
 pub const BACK_COLOR: Color = [0.0, 0.0, 0.0, 1.0];
 pub const HORIZONTAL_GRID_NUMBER: usize = 20;
 pub const VERTICAL_GRID_NUMBER: usize = 20;
-pub const WIDTH: i32 = 150;
+pub const WIDTH: i32 = 100;
 pub const HEIGHT: i32 = 100;
 
 #[derive(Debug, Clone, Copy)]
@@ -155,18 +155,7 @@ pub fn to_coord_u32(game_coord: i32) -> u32 {
     to_coord(game_coord) as u32
 }
 
-pub fn draw_block(color: Color, x: i32, y: i32, con: &Context, g: &mut G2d) {
-    let gui_x = to_coord(x);
-    let gui_y = to_coord(y);
-
-    rectangle(
-        color,
-        [gui_x, gui_y, BLOCK_SIZE, BLOCK_SIZE],
-        con.transform,
-        g,
-    );
-}
-
+//Draws a rectangle that fills the grid square with width and height
 pub fn draw_rectangle(color: Color, column: i32, row: i32, con: &Context, g: &mut G2d) {
     let (grid_width, grid_height) = grid_settings();
     // let square = rectangle::square(1.0, 1.0, grid_height);
@@ -181,12 +170,13 @@ pub fn draw_rectangle(color: Color, column: i32, row: i32, con: &Context, g: &mu
     );
 }
 
+// Calculates the size of the grid square and returns a f64 tuple of width and height
 pub fn grid_settings() -> (f64, f64) {
-    let grid_width = linspace(0.0, to_coord(WIDTH), VERTICAL_GRID_NUMBER + 2)
-        .nth(2)
+    let grid_width = linspace(0.0, to_coord(WIDTH) - 1.0, VERTICAL_GRID_NUMBER + 2)
+        .nth(1)
         .unwrap();
-    let grid_height = linspace(0.0, to_coord(HEIGHT), HORIZONTAL_GRID_NUMBER + 2)
-        .nth(2)
+    let grid_height = linspace(0.0, to_coord(HEIGHT) - 1.0, HORIZONTAL_GRID_NUMBER + 2)
+        .nth(1)
         .unwrap();
     (grid_width, grid_height)
 }
