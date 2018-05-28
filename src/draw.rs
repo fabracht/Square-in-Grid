@@ -1,13 +1,13 @@
 extern crate itertools_num;
 
-use controls::Direction;
+use controls::Movement;
 use itertools_num::linspace;
 use piston_window::types::Color;
 use piston_window::*;
 use piston_window::{rectangle, Context, G2d};
 use std::fmt;
-// use std::thread;
-// use std::time;
+ use std::thread;
+ use std::time;
 
 pub const BLOCK_SIZE: f64 = 10.0;
 pub const RED: Color = [1.0, 0.0, 0.0, 1.0];
@@ -110,6 +110,7 @@ impl Linea {
 pub struct Square {
     pub x: i32,
     pub y: i32,
+    pub vel: f64,
 }
 
 impl fmt::Display for Square {
@@ -120,30 +121,32 @@ impl fmt::Display for Square {
 
 impl Square {
     pub fn initial_position() -> Square {
-        Square { x: 0, y: 0 }
+        Square { x: 0, y: 0, vel: 0.0 }
     }
 
     pub fn curr_position(&self) -> Square {
         Self {
             x: self.x,
             y: self.y,
+            vel: self.vel,
         }
     }
 
     pub fn key_pressed(&mut self, key: Key) {
         let dir = match key {
-            Key::Up => Some(Direction::Up),
-            Key::Down => Some(Direction::Down),
-            Key::Left => Some(Direction::Left),
-            Key::Right => Some(Direction::Right),
+            Key::Up => Some(Movement::Up),
+            Key::Down => Some(Movement::Down),
+            Key::Left => Some(Movement::Left),
+            Key::Right => Some(Movement::Right),
+            Key::Space => Some(Movement::Down),
             _ => None,
         };
         self.update_square(dir);
     }
 
-    pub fn update_square(&mut self, dir: Option<Direction>) {
+    pub fn update_square(&mut self, dir: Option<Movement>) {
         // let mut position = ;
-        if let Some(mut d) = dir { Direction::move_square(&mut d, self)};
+        if let Some(mut d) = dir { Movement::move_square(&mut d, self)};
     }
 }
 

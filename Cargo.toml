@@ -7,9 +7,9 @@ authors = ["Fabrício Bracht <fabracht@gmail.com>"]
 piston_window="*"
 itertools="*"
 itertools-num="*"
-piston2d-shapes="*"
-num_cpus="*"
-rayon="*"
+#piston2d-shapes="*"
+#num_cpus="*"
+#rayon="*"
 clippy = {version = "*", optional = true}
 
 [features]

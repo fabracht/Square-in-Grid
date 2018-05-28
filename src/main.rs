@@ -5,13 +5,14 @@
 #![allow(unused_variables)]
 
 extern crate itertools_num;
-extern crate num_cpus;
+//extern crate num_cpus;
 extern crate piston_window;
-extern crate rayon;
+//extern crate rayon;
 //extern crate shapes;
 
 mod controls;
 mod draw;
+mod mechanics;
 // mod game;
 
 use piston_window::*;
@@ -20,12 +21,13 @@ use piston_window::*;
 // use std::f64;
 use std::thread;
 //use std::sync::mpsc;
-use rayon::prelude::*;
+//use rayon::prelude::*;
 // use std::fmt;
 use std::time;
 
 use controls::*;
 use draw::*;
+use mechanics::*;
 // use game::Game;
 
 fn main() {
