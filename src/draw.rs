@@ -16,8 +16,8 @@ pub const WHITE: Color = [1.0, 1.0, 1.0, 1.0];
 pub const BACK_COLOR: Color = [0.0, 0.0, 0.0, 1.0];
 pub const HORIZONTAL_GRID_NUMBER: usize = 20;
 pub const VERTICAL_GRID_NUMBER: usize = 20;
-pub const WIDTH: i32 = 100;
-pub const HEIGHT: i32 = 100;
+pub const WIDTH: i32 = 50;
+pub const HEIGHT: i32 = 50;
 
 #[derive(Debug, Clone, Copy)]
 pub struct Point {
